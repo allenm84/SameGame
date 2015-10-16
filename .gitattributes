@@ -1,0 +1,126 @@
+####################################################################
+# Don't convert to CRLF by default
+####################################################################
+* -text
+
+####################################################################
+# Declare files that will always have CRLF line endings on checkout.
+####################################################################
+*.0 text eol=crlf
+*.acd text eol=crlf
+*.addin text eol=crlf
+*.amm text eol=crlf
+*.bas text eol=crlf
+*.bat text eol=crlf
+*.build text eol=crlf
+*.c text eol=crlf
+*.cbk text eol=crlf
+*.ccexclude text eol=crlf
+*.ccscc text eol=crlf
+*.cd text eol=crlf
+*.cfg text eol=crlf
+*.cls text eol=crlf
+*.cmd text eol=crlf
+*.config text eol=crlf
+*.cpp text eol=crlf diff=cpp
+*.crc text eol=crlf
+*.cs text eol=crlf diff=csharp
+*.csproj text eol=crlf
+*.css text eol=crlf
+*.csv text eol=crlf
+*.ctl text eol=crlf
+*.cxs text eol=crlf
+*.cxd diff
+### visual studio
+*.datasource text eol=crlf
+*.dbk text eol=crlf
+### For InSight Internals imports
+*.def text eol=crlf
+*.dotsettings text eol=crlf
+*.dsq text eol=crlf
+*.dtd text eol=crlf
+*.dxf text eol=crlf
+*.evt text eol=crlf
+### Used by ISE
+*.ezaddin text eol=crlf
+### associated with unmanaged projects
+*.filters text eol=crlf
+*.fmt text eol=crlf
+### VB6 Samples
+*.frm text eol=crlf
+### Used by VS
+*.fxcop text eol=crlf
+*.gd2 text eol=crlf
+*.gms text eol=crlf
+*.gpj text eol=crlf
+*.gps text eol=crlf
+*.grp text eol=crlf
+*.h text eol=crlf
+### HTML based stuff
+*.hta text eol=crlf
+*.htm text eol=crlf diff=html
+*.html text eol=crlf diff=html
+*.ics text eol=crlf
+*.inf text eol=crlf
+*.ini text eol=crlf
+*.ism text eol=crlf
+*.js text eol=crlf
+*.l5x text eol=crlf
+*.licx text eol=crlf
+*.manifest text eol=crlf
+*.map text eol=crlf
+*.md text eol=crlf
+*.meta text eol=crlf
+*.mht text eol=crlf
+*.myapp text eol=crlf
+*.nbk text eol=crlf
+*.ndx text eol=crlf
+*.nuspec text eol=crlf
+*.ody text eol=crlf
+*.proj text eol=crlf
+*.qry text eol=crlf
+*.rc text eol=crlf
+*.rc2 text eol=crlf
+*.resx text eol=crlf
+*.ret text eol=crlf
+*.rgs text eol=crlf
+*.rsp text eol=crlf
+*.rtf text eol=crlf
+*.rul text eol=crlf
+*.ruleset text eol=crlf
+*.sample text eol=crlf
+*.set text eol=crlf
+### .settings => XML 
+*.settings  text eol=crlf
+*.shfbproj text eol=crlf
+*.sitemap text eol=crlf
+*.sln text eol=crlf
+*.srt text eol=crlf
+*.stylecop text eol=crlf
+*.targets text eol=crlf
+*.task text eol=crlf
+*.tdf text eol=crlf
+*.testrunconfig text eol=crlf
+*.todo text eol=crlf
+*.tssp text eol=crlf
+*.txt text eol=crlf
+*.vb text eol=crlf
+*.vbp text eol=crlf
+*.vbproj text eol=crlf
+*.vbw text eol=crlf
+*.vcproj text eol=crlf
+*.vcxproj text eol=crlf
+*.vdproj text eol=crlf
+*.ver text eol=crlf
+*.vsmdi text eol=crlf
+### XML
+*.wsdl text eol=crlf
+*.x text eol=crlf
+*.xaml text eol=crlf
+*.xml text eol=crlf
+*.xsc text eol=crlf
+*.xsd text eol=crlf
+*.xsl text eol=crlf
+*.xslt text eol=crlf
+*.xss text eol=crlf
+*.xsx text eol=crlf
