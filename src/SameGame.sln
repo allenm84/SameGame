@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 13.00
+# Visual Studio 2013
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SameGame.Buttons", "SameGame.Buttons\SameGame.Buttons.csproj", "{37E60038-14CA-4844-994F-F42A12446A69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SameGame.Library", "SameGame.Library\SameGame.Library.csproj", "{CEFA29B4-9BA6-40F4-8D96-9B1E315AB1B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SameGame.GDI", "SameGame.GDI\SameGame.GDI.csproj", "{EB49EBB1-7406-4D06-BBDB-88494DE01B79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37E60038-14CA-4844-994F-F42A12446A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37E60038-14CA-4844-994F-F42A12446A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37E60038-14CA-4844-994F-F42A12446A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37E60038-14CA-4844-994F-F42A12446A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEFA29B4-9BA6-40F4-8D96-9B1E315AB1B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEFA29B4-9BA6-40F4-8D96-9B1E315AB1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEFA29B4-9BA6-40F4-8D96-9B1E315AB1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEFA29B4-9BA6-40F4-8D96-9B1E315AB1B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB49EBB1-7406-4D06-BBDB-88494DE01B79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB49EBB1-7406-4D06-BBDB-88494DE01B79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB49EBB1-7406-4D06-BBDB-88494DE01B79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB49EBB1-7406-4D06-BBDB-88494DE01B79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
