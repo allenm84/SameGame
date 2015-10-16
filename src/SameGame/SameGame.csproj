@@ -45,9 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\AnimationItems\AnimationItem.cs" />
+    <Compile Include="Animation\AnimationItems\MoveHorzAnimationItem.cs" />
+    <Compile Include="Animation\AnimationItems\MoveVertAnimationItem.cs" />
+    <Compile Include="Animation\AnimationType.cs" />
     <Compile Include="Animation\BaseAnimationObject.cs" />
     <Compile Include="Animation\AnimationEngine.cs" />
     <Compile Include="Animation\BaseAnimationObjectSnapshot.cs" />
+    <Compile Include="CellLookup.cs" />
     <Compile Include="CellVisualState.cs" />
     <Compile Include="Colors.cs" />
     <Compile Include="Equations.cs" />

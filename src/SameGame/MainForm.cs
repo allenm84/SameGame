@@ -15,16 +15,24 @@ namespace SameGame
 {
   public partial class MainForm : Form
   {
+    static readonly int[][] mods = new int[][]
+    {
+      new int[] { 0, 1 },
+      new int[] { 0, -1 },
+      new int[] { 1, 0 },
+      new int[] { -1, 0 }
+    };
+
     const int Rows = 32;
     const int Columns = 32;
 
     private List<Cell> grid = new List<Cell>();
+    private CellLookup lookup = new CellLookup();
+
     private Random random = new Random();
 
     private Dictionary<CellVisualState, Cell> currentStates = new Dictionary<CellVisualState, Cell>();
     private AnimationEngine animationEngine = new AnimationEngine();
-
-    private DateTime gravityLast;
 
     public MainForm()
     {
@@ -53,7 +61,7 @@ namespace SameGame
         {
           var cell = new Cell(rect);
           cell.Color = colors[random.Next(colors.Length)];
-          cell.SetCoordinate(r, c);
+          lookup[r, c] = cell;
 
           grid.Add(cell);
           rect.X += cellWidth;
@@ -145,7 +153,9 @@ namespace SameGame
       visited.Add(value);
       value.Pending = true;
 
-      GetNeighbors(value, pending, visited);
+      int r, c;
+      lookup.GetCoordinate(value, out r, out c);
+      GetNeighbors(r, c, value.Color, pending, visited);
       visited.Clear();
 
       if (pending.Count > 1)
@@ -158,48 +168,102 @@ namespace SameGame
       }
     }
 
-    private void GetNeighbors(Cell cell, List<Cell> list, HashSet<Cell> visited)
+    private void GetNeighbors(int row, int column, Color color, List<Cell> list, HashSet<Cell> visited)
     {
-      foreach (var candidate in grid.Where(c => c.IsNeighbor(cell)))
+      int r, c;
+      foreach (var m in mods)
       {
-        if (candidate.Color != cell.Color)
+        r = row + m[0];
+        c = column + m[1];
+
+        Cell cell = lookup[r, c];
+        if (cell == null)
         {
           continue;
         }
 
-        if (!visited.Add(candidate))
+        if (cell.Color != color)
         {
           continue;
         }
 
-        candidate.Pending = true;
-        list.Add(candidate);
-        GetNeighbors(candidate, list, visited);
+        if (!visited.Add(cell))
+        {
+          continue;
+        }
+
+        cell.Pending = true;
+        list.Add(cell);
+        GetNeighbors(r, c, color, list, visited);
       }
     }
 
     private void ApplyGravity()
     {
-      const float Speed = 0.01f;
+      MoveDown();
+      MoveLeft();
+    }
 
-      float gridWidth = pnlScreen.Width;
-      float gridHeight = pnlScreen.Height;
+    private void MoveDown()
+    {
+      int r, c, rb;
 
-      DateTime now = DateTime.Now;
-      TimeSpan span = (now - gravityLast);
+      for (r = Rows - 2; r > -1; --r)
+      {
+        rb = r + 1;
+        for (c = 0; c < Columns; ++c)
+        {
+          var cell = lookup[r, c];
+          if (cell == null)
+          {
+            continue;
+          }
 
-      // retrieve all of the cells which are not currently animating 
-      // and aren't pending for animation
-      var cells = grid.Where(c => !animationEngine.IsAnimating(c) && !c.Pending).ToArray();
+          if (lookup.Exists(rb, c))
+          {
+            continue;
+          }
 
+          lookup.Move(r, c, rb, c);
+          animationEngine.MoveVert(cell, rb * cell.Height);
+        }
+      }
+    }
 
+    private void MoveLeft()
+    {
+      int r, c, cl;
 
-      gravityLast = now;
+      for (c = 1; c < Columns; ++c)
+      {
+        cl = c - 1;
+        for (r = 0; r < Rows; ++r)
+        {
+          var cell = lookup[r, c];
+          if (cell == null)
+          {
+            continue;
+          }
+
+          if (lookup.Exists(r, cl))
+          {
+            continue;
+          }
+
+          lookup.Move(r, c, r, cl);
+          animationEngine.MoveHorz(cell, cl * cell.Width);
+        }
+      }
     }
 
     private void animationEngine_Completed(object sender, AnimationCompletedEventArgs e)
     {
-      grid.RemoveAll(c => c == e.Target);
+      if (e.Type == AnimationType.Shrink)
+      {
+        Cell cell = (Cell)e.Target;
+        grid.Remove(cell);
+        lookup.Remove(cell);
+      }
     }
 
     private void pnlScreen_RenderFrame(object sender, PanelDbRenderEventArgs e)

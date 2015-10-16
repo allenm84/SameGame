@@ -12,9 +12,12 @@ namespace SameGame
   public class AnimationCompletedEventArgs : EventArgs
   {
     public BaseAnimationObject Target { get; private set; }
-    public AnimationCompletedEventArgs(BaseAnimationObject target)
+    public AnimationType Type { get; private set; }
+
+    public AnimationCompletedEventArgs(BaseAnimationObject target, AnimationType type)
     {
       Target = target;
+      Type = type;
     }
   }
 
@@ -22,7 +25,6 @@ namespace SameGame
   {
     private DateTime last;
     private List<AnimationItem> animations = new List<AnimationItem>();
-    private Dictionary<BaseAnimationObject, int> targets = new Dictionary<BaseAnimationObject, int>();
 
     public event AnimationCompletedEventHandler Completed;
 
@@ -41,37 +43,33 @@ namespace SameGame
       animation.Target = item;
       animation.Snapshot = item.TakeSnapshot();
       animations.Add(animation);
-      UpdateCount(item, 1);
+      item.AnimationType |= AnimationType.Shrink;
     }
 
-    private void UpdateCount(BaseAnimationObject item, int delta)
+    public void MoveVert(BaseAnimationObject item, float targetY)
     {
-      int count;
-      if (!targets.TryGetValue(item, out count))
-      {
-        if (delta <= 0)
-        {
-          return;
-        }
-
-        count = 0;
-        targets[item] = count;
-      }
-
-      count += delta;
-      if (count <= 0)
-      {
-        targets.Remove(item);
-      }
-      else
-      {
-        targets[item] = count;
-      }
+      var animation = new MoveVertAnimationItem();
+      animation.From = item.Y;
+      animation.To = targetY;
+      animation.Duration = TimeSpan.FromMilliseconds(200).TotalSeconds;
+      animation.Equation = Equations.ElasticEaseOut;
+      animation.Target = item;
+      animation.Snapshot = item.TakeSnapshot();
+      animations.Add(animation);
+      item.AnimationType |= AnimationType.MoveVert;
     }
 
-    public bool IsAnimating(BaseAnimationObject item)
+    public void MoveHorz(BaseAnimationObject item, float targetX)
     {
-      return targets.ContainsKey(item);
+      var animation = new MoveHorzAnimationItem();
+      animation.From = item.X;
+      animation.To = targetX;
+      animation.Duration = TimeSpan.FromMilliseconds(200).TotalSeconds;
+      animation.Equation = Equations.ElasticEaseOut;
+      animation.Target = item;
+      animation.Snapshot = item.TakeSnapshot();
+      animations.Add(animation);
+      item.AnimationType |= AnimationType.MoveHorz;
     }
 
     public void Update()
@@ -86,20 +84,20 @@ namespace SameGame
         if (animation.Completed)
         {
           animations.RemoveAt(i);
-          FireCompleted(animation.Target);
-          UpdateCount(animation.Target, -1);
+          FireCompleted(animation.Target, animation.Type);
+          animation.Target.AnimationType &= (~animation.Type);
         }
       }
 
       last = now;
     }
 
-    private void FireCompleted(BaseAnimationObject item)
+    private void FireCompleted(BaseAnimationObject item, AnimationType type)
     {
       var completed = Completed;
       if (completed != null)
       {
-        completed(this, new AnimationCompletedEventArgs(item));
+        completed(this, new AnimationCompletedEventArgs(item, type));
       }
     }
   }

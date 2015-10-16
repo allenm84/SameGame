@@ -13,6 +13,8 @@ namespace SameGame
     public float Bottom { get { return Y + Height; } }
     public float Right { get { return X + Width; } }
 
+    public AnimationType AnimationType;
+
     public bool Contains(float x, float y)
     {
       if (x < X) return false;

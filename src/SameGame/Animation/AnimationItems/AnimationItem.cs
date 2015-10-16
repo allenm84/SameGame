@@ -18,19 +18,22 @@ namespace SameGame
     public bool Completed;
     public Equation Equation;
 
+    public abstract AnimationType Type { get; }
+
     protected abstract void Apply();
 
     public void Update(double seconds)
     {
       Elapsed += seconds;
       Current = Equation(Elapsed, From, (To - From), Duration);
-      Apply();
 
       if (Elapsed >= Duration)
       {
         Current = To;
         Completed = true;
       }
+
+      Apply();
     }
   }
 }

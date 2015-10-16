@@ -8,6 +8,11 @@ namespace SameGame
 {
   public class ShrinkAnimationItem : AnimationItem
   {
+    public override AnimationType Type
+    {
+      get { return AnimationType.Shrink; }
+    }
+
     protected override void Apply()
     {
       float scale = ((float)(Current / 100));
