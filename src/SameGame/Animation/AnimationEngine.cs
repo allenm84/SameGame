@@ -22,6 +22,7 @@ namespace SameGame
   {
     private DateTime last;
     private List<AnimationItem> animations = new List<AnimationItem>();
+    private Dictionary<BaseAnimationObject, int> targets = new Dictionary<BaseAnimationObject, int>();
 
     public event AnimationCompletedEventHandler Completed;
 
@@ -40,6 +41,37 @@ namespace SameGame
       animation.Target = item;
       animation.Snapshot = item.TakeSnapshot();
       animations.Add(animation);
+      UpdateCount(item, 1);
+    }
+
+    private void UpdateCount(BaseAnimationObject item, int delta)
+    {
+      int count;
+      if (!targets.TryGetValue(item, out count))
+      {
+        if (delta <= 0)
+        {
+          return;
+        }
+
+        count = 0;
+        targets[item] = count;
+      }
+
+      count += delta;
+      if (count <= 0)
+      {
+        targets.Remove(item);
+      }
+      else
+      {
+        targets[item] = count;
+      }
+    }
+
+    public bool IsAnimating(BaseAnimationObject item)
+    {
+      return targets.ContainsKey(item);
     }
 
     public void Update()
@@ -55,6 +87,7 @@ namespace SameGame
         {
           animations.RemoveAt(i);
           FireCompleted(animation.Target);
+          UpdateCount(animation.Target, -1);
         }
       }
 

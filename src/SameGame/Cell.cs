@@ -19,6 +19,7 @@ namespace SameGame
 
     public CellVisualState State;
     public Color Color;
+    public bool Pending;
 
     private int row, column;
 

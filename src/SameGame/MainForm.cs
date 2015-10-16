@@ -24,6 +24,8 @@ namespace SameGame
     private Dictionary<CellVisualState, Cell> currentStates = new Dictionary<CellVisualState, Cell>();
     private AnimationEngine animationEngine = new AnimationEngine();
 
+    private DateTime gravityLast;
+
     public MainForm()
     {
       InitializeComponent();
@@ -141,16 +143,18 @@ namespace SameGame
 
       var visited = new HashSet<Cell>();
       visited.Add(value);
+      value.Pending = true;
 
       GetNeighbors(value, pending, visited);
       visited.Clear();
 
-      while (pending.Count > 0)
+      if (pending.Count > 1)
       {
-        var cell = pending[0];
-        pending.RemoveAt(0);
-        animationEngine.Shrink(cell);
-        await Task.Delay(1);
+        foreach (var cell in pending)
+        {
+          animationEngine.Shrink(cell);
+          await Task.Yield();
+        }
       }
     }
 
@@ -168,9 +172,29 @@ namespace SameGame
           continue;
         }
 
+        candidate.Pending = true;
         list.Add(candidate);
         GetNeighbors(candidate, list, visited);
       }
+    }
+
+    private void ApplyGravity()
+    {
+      const float Speed = 0.01f;
+
+      float gridWidth = pnlScreen.Width;
+      float gridHeight = pnlScreen.Height;
+
+      DateTime now = DateTime.Now;
+      TimeSpan span = (now - gravityLast);
+
+      // retrieve all of the cells which are not currently animating 
+      // and aren't pending for animation
+      var cells = grid.Where(c => !animationEngine.IsAnimating(c) && !c.Pending).ToArray();
+
+
+
+      gravityLast = now;
     }
 
     private void animationEngine_Completed(object sender, AnimationCompletedEventArgs e)
@@ -186,6 +210,7 @@ namespace SameGame
     private void pnlScreen_UpdateFrame(object sender, EventArgs e)
     {
       animationEngine.Update();
+      ApplyGravity();
     }
 
     private void pnlScreen_MouseMove(object sender, MouseEventArgs e)

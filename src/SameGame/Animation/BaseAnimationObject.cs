@@ -22,6 +22,13 @@ namespace SameGame
       return true;
     }
 
+    public bool IntersectsWith(float x, float y, float width, float height)
+    {
+      return 
+        (x < this.X + this.Width) && (this.X < (x + width)) &&
+        (y < this.Y + this.Height) && (this.Y < (y + height));
+    }
+
     public BaseAnimationObjectSnapshot TakeSnapshot()
     {
       return new BaseAnimationObjectSnapshot(X, Y, Width, Height);
