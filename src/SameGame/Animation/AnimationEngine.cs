@@ -38,7 +38,7 @@ namespace SameGame
       var animation = new ShrinkAnimationItem();
       animation.From = 100;
       animation.To = 10;
-      animation.Duration = TimeSpan.FromMilliseconds(400).TotalSeconds;
+      animation.Duration = TimeSpan.FromMilliseconds(800).TotalSeconds;
       animation.Equation = Equations.BounceEaseIn;
       animation.Target = item;
       animation.Snapshot = item.TakeSnapshot();
@@ -51,7 +51,7 @@ namespace SameGame
       var animation = new MoveVertAnimationItem();
       animation.From = item.Y;
       animation.To = targetY;
-      animation.Duration = TimeSpan.FromMilliseconds(200).TotalSeconds;
+      animation.Duration = TimeSpan.FromMilliseconds(4000).TotalSeconds;
       animation.Equation = Equations.ElasticEaseOut;
       animation.Target = item;
       animation.Snapshot = item.TakeSnapshot();
@@ -64,7 +64,7 @@ namespace SameGame
       var animation = new MoveHorzAnimationItem();
       animation.From = item.X;
       animation.To = targetX;
-      animation.Duration = TimeSpan.FromMilliseconds(200).TotalSeconds;
+      animation.Duration = TimeSpan.FromMilliseconds(4000).TotalSeconds;
       animation.Equation = Equations.ElasticEaseOut;
       animation.Target = item;
       animation.Snapshot = item.TakeSnapshot();
